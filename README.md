@@ -1,0 +1,42 @@
+# Deploy workloads on virtual servers in an IBM Cloud VPC
+
+
+## Solution description
+
+This reference solution describes the services and best practices to provision a highly available, secured virtual server instance-based workloads into IBM Cloud using a Virtual Private Cloud. This solution describes each of the essential aspects of the architecture including Security, Networking, Access, Data & Storage, Fabric/Compute and Operations. Within this repository the [infrastructure_code](./infrastructure_code) folder contains the scripts your team can use to immediately provision and explore the solution to plan and design your IBM Cloud environments. 
+
+---
+
+![reference solution](./docs/imgs/overall.png)
+
+---
+
+
+## Aspects
+
+To explain the capabilities of this solution we use archiecture aspects that provide a diagram,textual explanations and links to documentation for the service components of the archiecture. In addition to design and documentation, the aspects include the infrastructure code used to implement the design. You can use these aspects to explain the solution to different stakeholders. The aspects are outlined below and align to the infrastructure code also maintaied in this repository. The Architecture aspects for this solution include:
+
+ - [Networking](./docs/aspects/networking.md): Describes the regional (multi-zone) network architectures used for this solution.
+ 
+ - [Fabric/compute](./docs/aspects/compute.md): Describes the IBM Cloud fabric and compute services capabilities, integration and controls used in this solution.
+ 
+ - [Access](./docs/aspects/access.md): Describes the account, access/resource group, organization and user/role model used in this solution to control access to the services and resource instances.
+ 
+ - [Security](./docs/aspects/security.md): Describes the security services and configuration to meet environment isolation, network segregation and application security used in this solution.
+ 
+ - [Data & Storage](./docs/aspects/data_storage.md): Describes the IBM Cloud data and storage services, capabilities, integration and controls used in this solution.
+ 
+ - [Devops/Operations](./docs/aspects/operations.md):  Describes the services usded to deliver, change, monitor and manage the solution environment defined in this solution.
+
+
+### Steps to provision this solution
+
+1. Complete the [tutorial](https://www.ibm.com/cloud/garage/architectures/public-cloud/public-cloud-infrastructure) for provisioning resource to IBM Cloud with terraform 
+
+2. Build the [IBM Cloud provider for Terraform](https://github.com/IBM-Cloud/terraform-provider-ibm) container and clone this repository into the container.
+
+3. Add your values for the variables in the [variables.tf](/infrastructure_code/variables.tf) 
+
+4. Run terraform plan and apply. 
+
+Enjoy!
