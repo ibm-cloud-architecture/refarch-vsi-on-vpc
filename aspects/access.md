@@ -1,6 +1,6 @@
 ## Account, user and accesss control
 
-IBM Cloud uses identify management services to control access to provision, configure and use cloud services. The management services cover [IAM](https://cloud.ibm.com/docs/iam?topic=iam-iamoverview), [Classic infrastructure](https://cloud.ibm.com/classic) and [Cloud Foundry](https://cloud.ibm.com/docs/cloud-foundry?topic=cloud-foundry-about) models. You can also [federate your enterprise ID system with IBM Cloud identity services](https://developer.ibm.com/dwblog/2018/identity-federation-ibm-cloud/). Access policies can be assigned to users an groups of users. This VPC solution uses a set of identity services to control access 
+IBM Cloud uses identify management services to control access to provision, configure and use cloud services. The management services cover [IAM](https://cloud.ibm.com/docs/iam?topic=iam-iamoverview), [Classic infrastructure](https://cloud.ibm.com/classic) and [Cloud Foundry](https://cloud.ibm.com/docs/cloud-foundry?topic=cloud-foundry-about) models. This solution uses the IAM and classic infrastructure identity services. Users are invited to the account and a variable is used to define the set of userid and access roles to individual services. You may [federate your enterprise ID system with IBM Cloud identity services](https://developer.ibm.com/dwblog/2018/identity-federation-ibm-cloud/) and change this solution to use the integration.  Access policies can be assigned to users an groups of users.  
 
 
 ---
