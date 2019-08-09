@@ -26,7 +26,7 @@ To explain the capabilities of this solution we use archiecture aspects that pro
  
  - [Data & Storage](/aspects/data_storage.md): Describes the IBM Cloud data and storage services, capabilities, integration and controls used in this solution.
  
- - [Devops/Operations](./docs/aspects/operations.md):  Describes the services usded to deliver, change, monitor and manage the solution environment defined in this solution.
+ - [Devops/Operations](/aspects/operations.md):  Describes the services usded to deliver, change, monitor and manage the solution environment defined in this solution.
 
 
 ### Steps to provision this solution
