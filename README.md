@@ -3,7 +3,7 @@
 
 ## Solution description
 
-This reference solution describes the services and best practices to provision a highly available, secured virtual server instance-based workloads into IBM Cloud using a Virtual Private Cloud. This solution describes each of the essential aspects of the architecture including Security, Networking, Access, Data & Storage, Fabric/Compute and Operations. Within this repository the [infrastructure_code](/infrastructure_code) folder contains the scripts your team can use to immediately provision and explore the solution to plan and design your IBM Cloud environments. 
+This reference solution describes the services and best practices to provision a highly available, secured virtual server instance-based workloads into IBM Cloud using a Virtual Private Cloud. For specific strategies on deploying resilient applications see [this article on IBM Cloud Docs](https://cloud.ibm.com/docs/tutorials?topic=solution-tutorials-strategies-for-resilient-applications). The **workloads on virtual servers in an IBM Cloud VPC** solution describes each of the essential aspects of the architecture including Security, Networking, Access, Data & Storage, Fabric/Compute and Operations. Within this repository the [infrastructure_code](/infrastructure_code) folder contains the scripts your team can use to immediately provision and explore the solution to plan and design your IBM Cloud environments. 
 
 ---
 
