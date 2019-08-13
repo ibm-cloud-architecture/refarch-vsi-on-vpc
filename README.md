@@ -39,4 +39,11 @@ To explain the capabilities of this solution we use archiecture aspects that pro
 
 4. Run terraform plan and apply. 
 
+
+### Authors and Editors:
+
+- [Vidhi Shah](Vidhi.Shah@ibm.com), IBM GCAT Cloud Solution Developer
+- [Jennifer Valle](Jennifer.Valle@ibm.com), IBM GCAT Cloud Solution Developer
+- [Steve Cotugno](mailto:steve.cotugno@us.ibm.com), IBM Solution Architect
+
 Enjoy!
