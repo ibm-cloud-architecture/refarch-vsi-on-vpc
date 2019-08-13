@@ -44,6 +44,6 @@ To explain the capabilities of this solution we use archiecture aspects that pro
 
 - [Vidhi Shah](Vidhi.Shah@ibm.com), IBM GCAT Cloud Solution Developer
 - [Jennifer Valle](Jennifer.Valle@ibm.com), IBM GCAT Cloud Solution Developer
-- [Steve Cotugno](mailto:steve.cotugno@us.ibm.com), IBM Solution Architect
+- [Steve Cotugno](steve.cotugno@us.ibm.com), IBM Solution Architect
 
 Enjoy!
