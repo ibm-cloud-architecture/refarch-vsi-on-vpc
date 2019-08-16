@@ -3,7 +3,7 @@
 
 ## Solution description
 
-This reference solution describes the services and best practices to provision a highly available, secured virtual server instance-based workloads into IBM Cloud using a Virtual Private Cloud. For specific strategies on deploying resilient applications see [this article on IBM Cloud Docs](https://cloud.ibm.com/docs/tutorials?topic=solution-tutorials-strategies-for-resilient-applications). The **workloads on virtual servers in an IBM Cloud VPC** solution describes each of the essential aspects of the architecture including Security, Networking, Access, Data & Storage, Fabric/Compute and Operations. Within this repository the [infrastructure_code](/infrastructure_code) folder contains the scripts your team can use to immediately provision and explore the solution to plan and design your IBM Cloud environments. 
+This reference solution describes the services and best practices to provision a highly available, secured virtual server instance-based workloads into IBM Cloud using a Virtual Private Cloud. For specific strategies on deploying resilient applications see [this article on IBM Cloud Docs](https://cloud.ibm.com/docs/tutorials?topic=solution-tutorials-strategies-for-resilient-applications). The **workloads on virtual servers in an IBM Cloud VPC** solution describes each of the essential aspects of the architecture including Security, Networking, Access, Data & Storage, Fabric/Compute and Operations. This contains the scripts your team can use to immediately provision and explore the solution to plan and design your IBM Cloud environments. 
 
 ---
 
@@ -35,7 +35,7 @@ To explain the capabilities of this solution we use archiecture aspects that pro
 
 2. Build the [IBM Cloud provider for Terraform](https://github.com/IBM-Cloud/terraform-provider-ibm) container and clone this repository into the container.
 
-3. Add your values for the variables in the [variables.tf](/infrastructure_code/variables.tf) 
+3. Add your values for the variables in the [variables.tf](./variables.tf) 
 
 4. Run terraform plan and apply. 
 
