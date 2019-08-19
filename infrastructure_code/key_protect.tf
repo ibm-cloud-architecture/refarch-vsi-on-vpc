@@ -63,7 +63,6 @@ resource "ibm_iam_access_group_policy" "kms_engineer_access_policy" {
 }
 
 
-# Create KP Root key and sends JSON output to results.txt  
 resource "null_resource" "key_protect_create_key" {
   provisioner "local-exec" {
     command = <<EOT
@@ -87,7 +86,7 @@ https://${var.ibm_region}.kms.cloud.ibm.com/api/v2/keys \
   ]
 }')")
 echo $CERT
-echo $CERT >> config/kms_cert.txt
+echo "$CERT" >> config/kms_cert.txt
 echo $CERT | jq '.resources[0].id' | cut -d '"' -f 2 >> config/kms_cert_id.txt
     EOT
   }
@@ -109,7 +108,7 @@ data "null_data_source" "key_protect_root_key" {
 resource "null_resource" "key_protect_service_policy_for_cos" {
     provisioner "local-exec" {
     command = <<EOT
-echo $(curl -X POST \
+KEY=$(curl -X POST \
 "https://iam.cloud.ibm.com/v1/policies" \
 -H 'Authorization: ${data.null_data_source.iam_auth_token.outputs["token"]}' \
 -H 'Content-Type: application/json' \
@@ -121,10 +120,6 @@ echo $(curl -X POST \
         { 
           "name": "accountId",
           "value": "${var.account_id}"
-        },
-        {
-          "name": "region",
-          "value": "${var.ibm_region}"
         },
         {
           "name": "serviceName",
@@ -160,10 +155,12 @@ echo $(curl -X POST \
       ]
     }
   ]
-}') >> config/cos_policy_id.txt
+}')
+echo $KEY
+echo $KEY | jq ".id" | cut -d '"' -f 2 >> config/cos_policy_id.txt
 
 EOT
-  
+  # 
   }
 depends_on = ["ibm_resource_instance.multizone_kms", "ibm_resource_instance.multizone_vpc_cos"]  
 }
@@ -173,7 +170,7 @@ depends_on = ["ibm_resource_instance.multizone_kms", "ibm_resource_instance.mult
 resource "null_resource" "key_protect_service_policy_for_psql" {
     provisioner "local-exec" {
     command = <<EOT
-echo $(curl -X POST \
+KEY=$(curl -X POST \
 "https://iam.cloud.ibm.com/v1/policies" \
 -H 'Authorization: ${data.null_data_source.iam_auth_token.outputs["token"]}' \
 -H 'Content-Type: application/json' \
@@ -224,10 +221,11 @@ echo $(curl -X POST \
       ]
     }
   ]
-}') >> config/psql_policy_id.txt
+}')
+echo $KEY
+echo $KEY | jq ".id" | cut -d '"' -f 2 >> config/psql_policy_id.txt
 
 EOT
-  
   
   }
   depends_on = ["ibm_resource_instance.multizone_kms", "ibm_resource_instance.postgresql_resource_instance"]
@@ -236,8 +234,8 @@ EOT
 # Stores IAM policyID for key ptotect to refer when running terraform destroy
 data "null_data_source" "kms_policy_keys" {
   inputs = {
-     cos_policy_key = "${element(split("\"", file("${path.module}/config/cos_policy_id.txt")), 1)}"
-     psql_policy_key = "${element(split("\"", file("${path.module}/config/psql_policy_id.txt")), 1)}"
+     cos_policy_key = "${file("${path.module}/config/cos_policy_id.txt")}"
+     psql_policy_key = "${file("${path.module}/config/psql_policy_id.txt")}"
   }
   depends_on = ["null_resource.key_protect_service_policy_for_cos", "null_resource.key_protect_service_policy_for_psql"]
 }
@@ -248,10 +246,20 @@ resource "null_resource" "destroy_cos-kp_authorization" {
   provisioner "local-exec" {
     when = "destroy"
     command = <<EOT
-      echo "curl -X DELETE \
-      'https://iam.cloud.ibm.com/v1/policies/${data.null_data_source.kms_policy_keys.outputs["cos_policy_key"]}' \
-      -H 'Authorization: ${data.null_data_source.iam_auth_token.outputs["token"]}'\
-      -H 'Content-Type: application/json'" >> destroy_all_keys.sh
+        TOKEN=$(echo "$(curl -X POST \
+'https://iam.cloud.ibm.com/identity/token' \
+-H 'Content-Type: application/x-www-form-urlencoded' \
+-d 'grant_type=urn:ibm:params:oauth:grant-type:apikey' \
+-d 'apikey=${var.ibmcloud_apikey}')")
+WITH_QUOTES=$(echo $TOKEN | jq '.access_token')
+TOKEN_RAW=$(echo $WITH_QUOTES | cut -d '"' -f 2)
+BEARER=$(echo Bearer $TOKEN_RAW)
+KEY_ID=$(cat config/cos_policy_id.txt)
+REGION=${var.ibm_region}
+curl -X DELETE \
+    "https://iam.cloud.ibm.com/v1/policies/$KEY_ID" \
+    -H "Authorization: $BEARER"\
+    -H 'Content-Type: application/json'
     EOT
   }
   depends_on = ["ibm_resource_instnace.multizone_kms"}
@@ -263,10 +271,20 @@ resource "null_resource" "destroy_postgres-kp_authorization" {
   provisioner "local-exec" {
      when = "destroy"
     command = <<EOT
-      echo "curl -X DELETE \
-      'https://iam.cloud.ibm.com/v1/policies/${data.null_data_source.kms_policy_keys.outputs["psql_policy_key"]}' \
-      -H 'Authorization: ${data.null_data_source.iam_auth_token.outputs["token"]}'\
-      -H 'Content-Type: application/json'" >> destroy_all_keys.sh
+    TOKEN=$(echo "$(curl -X POST \
+'https://iam.cloud.ibm.com/identity/token' \
+-H 'Content-Type: application/x-www-form-urlencoded' \
+-d 'grant_type=urn:ibm:params:oauth:grant-type:apikey' \
+-d 'apikey=${var.ibmcloud_apikey}')")
+WITH_QUOTES=$(echo $TOKEN | jq '.access_token')
+TOKEN_RAW=$(echo $WITH_QUOTES | cut -d '"' -f 2)
+BEARER=$(echo Bearer $TOKEN_RAW)
+KEY_ID=$(cat config/psql_policy_id.txt)
+REGION=${var.ibm_region}
+curl -X DELETE \
+    "https://iam.cloud.ibm.com/v1/policies/$KEY_ID" \
+    -H "Authorization: $BEARER"\
+    -H 'Content-Type: application/json'
     EOT
   }
 }
