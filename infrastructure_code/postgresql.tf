@@ -15,7 +15,7 @@ resource "ibm_resource_instance" "postgresql_resource_instance" {
 
   parameters = {
     service-endpoints = "${var.end_pts}"
-    key_protect_key = "${data.null_data_source.key_protect_keys.outputs["root_key"]}"
+    key_protect_key = "${data.null_data_source.key_protect_root_key.outputs["root_key"]}"
   }
 
   //User can increase timeouts
