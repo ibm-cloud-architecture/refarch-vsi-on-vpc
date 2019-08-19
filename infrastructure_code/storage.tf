@@ -17,7 +17,7 @@ resource "ibm_resource_instance" "multizone_vpc_cos" {
 
   parameters = {
     service-endpoints = "${var.end_pts}"
-    key_protect_key   = "${data.null_data_source.key_protect_keys.outputs["root_key"]}"
+    key_protect_key   = "${data.null_data_source.key_protect_root_key.outputs["root_key"]}"
   }
   //User can increase timeouts 
   timeouts {
@@ -43,7 +43,7 @@ resource "null_resource" "create_cos_bucket" {
   -H 'content-length: ' \
   -H 'ibm-service-instance-id: ${element(split(":", ibm_resource_instance.multizone_vpc_cos.id), 7)}' \
   -H 'ibm-sse-kp-encryption-algorithm: "AES256"' \
-  -H 'ibm-sse-kp-customer-root-key-crn: ${data.null_data_source.key_protect_keys.outputs["root_key"]}'
+  -H 'ibm-sse-kp-customer-root-key-crn: ${data.null_data_source.key_protect_root_key.outputs["root_key"]}'
     
 EOT
   }
