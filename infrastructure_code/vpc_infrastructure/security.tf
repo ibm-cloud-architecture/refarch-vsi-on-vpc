@@ -4,22 +4,22 @@
 ##############################################################################
 
 
-
-# Create ssh key for all virtual servers.
-resource "ibm_is_ssh_key" "multizone_ssh_key" {
-  name       = "multizone_key-${var.unique_id}"
-  public_key = "${var.ssh_key}"
-}
-
-
+##############################################################################
 # Creates a security group to be used for each VSI in the VPC
+##############################################################################
+
 resource "ibm_is_security_group" "multizone_security_group" {
   name  = "multizone_sg-${var.unique_id}"
   vpc   = "${ibm_is_vpc.multizone_vpc.id}"
 }
 
+##############################################################################
 
+
+##############################################################################
 # Creates security group rules in the security group
+##############################################################################
+
 resource "ibm_is_security_group_rule" "security_group_rule_ingress" {
   group     = "${ibm_is_security_group.multizone_security_group.id}"
   direction = "ingress"
@@ -31,8 +31,13 @@ resource "ibm_is_security_group_rule" "security_group_rule_egress" {
   remote    = "${var.access_to_any_ip}"
 }
 
+##############################################################################
 
+
+##############################################################################
 # Create an  ACL for ingress/egress used by  all subnets in VPC
+##############################################################################
+
 resource "ibm_is_network_acl" "multizone_acl" {
   name = "multizone-acl-${var.unique_id}-${ibm_is_vpc.multizone_vpc.id}"
   rules = [
@@ -52,3 +57,5 @@ resource "ibm_is_network_acl" "multizone_acl" {
     }
   ]
 }
+
+##############################################################################
