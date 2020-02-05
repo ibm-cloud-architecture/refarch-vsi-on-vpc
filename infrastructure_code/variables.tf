@@ -151,7 +151,7 @@ variable engineer_access {
 ##############################################################
 # VPC specific variabless
 # See this page for guidance on IP management
-# https://cloud.ibm.com/docs/vpc?topic=vpc-choosing-ip-ranges-for-your-vpc&locale=en-us
+# https://cloud.ibm.com/docs/vpc?topic=vpc-choosing-ip-ranges-for-your-vpc
 ##############################################################
 variable address_prefix_beginning {
   description = "address prefix used in vpc"
