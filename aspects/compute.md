@@ -1,6 +1,7 @@
 ## Compute
 
 The [virtual server instance (VSI)](https://cloud.ibm.com/docs/vpc-on-classic-vsi?topic=vpc-on-classic-vsi-getting-started) is used for the compute resource in this solution. The VSI is deployed into one of three zones and attached to a single subnet. The virtual server is a part of the load balancer pool and enabled to communicate to public internet via the public gateway.
+
 ---
 
 ![Architecture](../imgs/compute.png)
